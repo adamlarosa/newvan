@@ -1,12 +1,21 @@
 const cases = document.getElementById("case");
-cases.innerText="confirmed cases";
-
+const title = document.getElementById("title");
+const covidURL = "https://api.covid19api.com"
+let covidPATH = "/dayone/country/"
+let covidSLUG = "us"
 let data;
 
-fetch(`https://api.covid19api.com/dayone/country/us`)
+let states = {};
+
+provinceInStates = (entry) => {
+    return Object.keys(states).includes(entry.Province)
+}
+
+console.log("FETCH!!")
+fetch(`${covidURL}${covidPATH}${covidSLUG}`)
     .then(resp => resp.json())
     .then(json => {
         data = json;
-        cases.innerText = data[0].Confirmed;
-    });
+        console.log("complete!")
+    })
 
