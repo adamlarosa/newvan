@@ -1,9 +1,10 @@
 const cases = document.getElementById("case");
 const title = document.getElementById("title");
+const deaths = document.getElementById("deaths");
 const covidURL = "https://api.covid19api.com"
 let covidPATH = "/dayone/country/"
 let covidSLUG = "us"
-let data;
+
 
 let states = {};
 
@@ -12,9 +13,10 @@ fetchData = () => {
     fetch(`${covidURL}${covidPATH}${covidSLUG}`)
         .then(resp => resp.json())
         .then(json => {
-            data = json;
+            sortFetch(json);
+            deaths.innerText = `${states[""][""][states[""][""].length - 1 ].Deaths} - Deaths`;
+            cases.innerText = `${states[""][""][states[""][""].length - 1 ].Confirmed} - Confirmed`;
             console.log("fetch complete!")
-            sortFetch(data)
         })
 }
 
@@ -57,13 +59,6 @@ sortFetch = (data) => {
             addProvinceToStates(entry);
         }
     }
-    console.log("Sort complete!")
 }
-
-
-loadData = async () => {
-    await fetchData();
-    await sortFetch(data)
-}
-
-loadData();
+title.innerText = "COVID-19"
+fetchData();
