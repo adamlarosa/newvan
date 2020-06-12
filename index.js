@@ -5,6 +5,8 @@ const covidURL = "https://api.covid19api.com"
 let covidPATH = "/dayone/country/"
 let covidSLUG = "us"
 
+const stateSelector = document.getElementById("state-selector");
+
 
 let states = {};
 
@@ -14,11 +16,19 @@ fetchData = () => {
         .then(resp => resp.json())
         .then(json => {
             sortFetch(json);
+
             deaths.innerText = `${states[""][""][states[""][""].length - 1 ].Deaths} - Deaths`;
             cases.innerText = `${states[""][""][states[""][""].length - 1 ].Confirmed} - Confirmed`;
+debugger
             console.log("fetch complete!")
+            Object.keys(states).map(key => {
+                console.log(key, "plz add function, pass each key to appendchild for dropdown")
+            })
         })
 }
+
+
+
 
 provinceInStates = (entry) => {
     return Object.keys(states).includes(entry.Province)
@@ -35,15 +45,15 @@ addProvinceToStates = (entry) => {
     states[Province][City].push(entry);
 }
 
-addEntryToStates = (entry) => {
-    const { Province, City } = entry;
-    states[Province][City].push(entry)
-}
-
 addCityToProvince = (entry) => {
     const { Province, City } = entry;
     states[Province][City] = [];
     states[Province][City].push(entry);
+}
+
+addEntryToStates = (entry) => {
+    const { Province, City } = entry;
+    states[Province][City].push(entry)
 }
 
 sortFetch = (data) => {
