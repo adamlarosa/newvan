@@ -16,10 +16,9 @@ fetchData = () => {
         .then(resp => resp.json())
         .then(json => {
             sortFetch(json);
-
+debugger    
             deaths.innerText = `${states[""][""][states[""][""].length - 1 ].Deaths} - Deaths`;
             cases.innerText = `${states[""][""][states[""][""].length - 1 ].Confirmed} - Confirmed`;
-debugger
             console.log("fetch complete!")
             Object.keys(states).map(key => {
                 console.log(key, "plz add function, pass each key to appendchild for dropdown")
