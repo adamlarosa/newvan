@@ -5,14 +5,47 @@ const covidURL = "https://api.covid19api.com"
 let covidPATH = "/dayone/country/"
 let covidSLUG = "us"
 
+const main = document.getElementById("main-content");
+
 const stateSelector = document.getElementById("state-selector");
 const stateForm = document.getElementById("selectState")
+
+let countyContainer = document.createElement("div")
+let countyForm = document.createElement("form")
+let countySelect = document.createElement("select")
+let countyInput = document.createElement("input")
+
 
 stateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const index = stateSelector.selectedIndex
-    console.log(stateSelector.options[index].value)
+    showCounty(stateSelector.options[index].value)
 })
+
+showCounty = (state) => {  
+    countyContainer.id = "county-container"
+    countySelect.id = "county-select"
+    countyInput.type = "submit"
+
+    countyContainer.appendChild(countyForm)
+    countyForm.appendChild(countySelect)
+    countyForm.appendChild(countyInput)
+
+    Object.keys(states[state]).sort().map(name => {
+        countySelect.appendChild(dropdownOption(name))
+    })
+    main.innerHTML = ""
+    main.appendChild(countyContainer)
+    countyForm.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const index = countySelect.selectedIndex
+        countyInfo(countySelect.options[index].value)
+    })
+}
+
+countyInfo = (county) => {
+    console.log(county)
+}
 
 let states = {};
 
@@ -27,6 +60,7 @@ fetchData = () => {
             Object.keys(states).sort().map(name => {
                 stateSelector.appendChild(dropdownOption(name));
             })
+            main.innerText = "Select a state from the right."
         })
 }
 
