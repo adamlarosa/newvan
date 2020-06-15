@@ -36,5 +36,6 @@ main #content {
 
 footer {
     display: flex;
-    justify-content: space-around;
+    flex-direction: column;
+    justify-content: center;
 }

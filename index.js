@@ -3,18 +3,20 @@ const title = document.getElementById("title");
 const deaths = document.getElementById("deaths");
 const covidURL = "https://api.covid19api.com"
 let covidPATH = "/dayone/country/"
-let covidSLUG = "us"
+let covidSLUG = "china"
 
 const main = document.getElementById("main-content");
 
 const stateSelector = document.getElementById("state-selector");
 const stateForm = document.getElementById("selectState")
 
-const countyShow = document.getElementById("footer")
+const countyShow = document.getElementById("footer") /* lolwut */
+const countyInfoData = document.createElement('div')
 const countyContainer = document.createElement("div")
 const countyForm = document.createElement("form")
 const countySelect = document.createElement("select")
 const countyInput = document.createElement("input")
+countyInfoData.className = "entry-container"
 countyContainer.id = "county-container"
 countySelect.id = "county-select"
 countyInput.type = "submit"
@@ -51,28 +53,31 @@ countyInfo = (county, state) => {
     countyInfo.innerText = `${county} County, ${state}`
 
     displayCountyInfo(states[state][county]);
-/*
-iterate through array
-create div for each entry
-
-    example entry
-    <div class="entry">date: 45 deaths, 4832 confirmed cases with 4433 still active</div>
-
-    display:
-        active cases
-        confirmed cases
-        date
-        deaths
-*/
 }
 displayCountyInfo = (county) => {
     Object.keys(county).forEach(i => {
-        drawCountyInfoDiv(county[i]);
+        drawCountyEntryInfo(county[i]);
     });
 }
+/* bookmark --------------------------------------------------------------------------*/
+drawCountyEntryInfo = (entry) => {
+    /*
+        clear countyInfo?
+        create new div
+        add entry data to div 
+        append to countyInfo
+    */
+    countyShow.appendChild(countyInfoData)
+    /* the preceding is the correct 
+        appendChild destination
+        but CSS of "footer" is incorrent
+        must be rows instead of columns?
+    */
+    newEntry = document.createElement('div');
+    newEntry.className = "entry"
+    newEntry.innerText = "testing"
+    countyInfoData.appendChild(newEntry)
 
-drawCountyInfoDiv = (entry) => {
-    console.log(entry)
 }
 
 let states = {};
@@ -83,8 +88,8 @@ fetchData = () => {
         .then(resp => resp.json())
         .then(json => {
             sortFetch(json);
-            deaths.innerText = `${states[""][""][states[""][""].length - 1 ].Deaths} - Deaths`;
-            cases.innerText = `${states[""][""][states[""][""].length - 1 ].Confirmed} - Confirmed`;
+                deaths.innerText = `${states[""][""][states[""][""].length - 1 ].Deaths} - Deaths`;
+                cases.innerText = `${states[""][""][states[""][""].length - 1 ].Confirmed} - Confirmed`;
             Object.keys(states).sort().map(name => {
                 stateSelector.appendChild(dropdownOption(name));
             })
