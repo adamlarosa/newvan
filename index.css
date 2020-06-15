@@ -1,12 +1,17 @@
+* {
+    background: black;
+    color: white;
+}
+
 header {
-    border: 5px solid black;
-    background: yellow;
+    /* border: 5px solid black;
+    background: yellow; */
     padding: 10px;
-    margin: 10px;
+    margin: 10px; 
     display: flex;
     justify-content: space-evenly;
 }
-header .cases {   
+/* header .cases {   
     background: pink;
 }
 header #title {
@@ -14,17 +19,22 @@ header #title {
 }
 header .deaths {
     background: red
-}
+} */
 
 
 main {
-    background: blue;
+    /* background: blue;
     border: 5px solid black;
     padding: 10px;
-    margin: 10px;
+    margin: 10px; */
     display: flex;
     justify-content: space-around;
 }
 main #content {
     background: white;
+}
+
+footer {
+    display: flex;
+    justify-content: space-around;
 }

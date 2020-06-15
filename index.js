@@ -10,27 +10,28 @@ const main = document.getElementById("main-content");
 const stateSelector = document.getElementById("state-selector");
 const stateForm = document.getElementById("selectState")
 
-let countyContainer = document.createElement("div")
-let countyForm = document.createElement("form")
-let countySelect = document.createElement("select")
-let countyInput = document.createElement("input")
+const countyShow = document.getElementById("footer")
+const countyContainer = document.createElement("div")
+const countyForm = document.createElement("form")
+const countySelect = document.createElement("select")
+const countyInput = document.createElement("input")
+countyContainer.id = "county-container"
+countySelect.id = "county-select"
+countyInput.type = "submit"
+countyContainer.appendChild(countyForm)
+countyForm.appendChild(countySelect)
+countyForm.appendChild(countyInput)
+
 
 
 stateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const index = stateSelector.selectedIndex
-    showCounty(stateSelector.options[index].value)
+    showCountys(stateSelector.options[index].value)
 })
 
-showCounty = (state) => {  
-    countyContainer.id = "county-container"
-    countySelect.id = "county-select"
-    countyInput.type = "submit"
-
-    countyContainer.appendChild(countyForm)
-    countyForm.appendChild(countySelect)
-    countyForm.appendChild(countyInput)
-
+showCountys = (state) => {  
+    countySelect.innerHTML = ""
     Object.keys(states[state]).sort().map(name => {
         countySelect.appendChild(dropdownOption(name))
     })
@@ -39,12 +40,39 @@ showCounty = (state) => {
     countyForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const index = countySelect.selectedIndex
-        countyInfo(countySelect.options[index].value)
+        countyInfo(countySelect.options[index].value, state)
     })
 }
+countyInfo = (county, state) => {
+    //appended to countyShow (i.e. footer)
+    let countyInfo = document.createElement("div")
+    countyShow.innerHTML = ""
+    countyShow.appendChild(countyInfo)
+    countyInfo.innerText = `${county} County, ${state}`
 
-countyInfo = (county) => {
-    console.log(county)
+    displayCountyInfo(states[state][county]);
+/*
+iterate through array
+create div for each entry
+
+    example entry
+    <div class="entry">date: 45 deaths, 4832 confirmed cases with 4433 still active</div>
+
+    display:
+        active cases
+        confirmed cases
+        date
+        deaths
+*/
+}
+displayCountyInfo = (county) => {
+    Object.keys(county).forEach(i => {
+        drawCountyInfoDiv(county[i]);
+    });
+}
+
+drawCountyInfoDiv = (entry) => {
+    console.log(entry)
 }
 
 let states = {};
@@ -64,6 +92,7 @@ fetchData = () => {
         })
 }
 
+/* populate a dropdown menu*/
 dropdownOption = (name) => {
     let newOption = document.createElement("option")
     newOption.value = name;
@@ -71,6 +100,7 @@ dropdownOption = (name) => {
     return newOption
 }
 
+/* sort data from fetch by state & county*/
 provinceInStates = (entry) => {
     return Object.keys(states).includes(entry.Province)
 }
@@ -106,7 +136,5 @@ sortFetch = (data) => {
         }
     }
 }
-
-
 title.innerText = "COVID-19"
 fetchData();
