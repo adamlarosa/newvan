@@ -65,9 +65,13 @@ countyInfo = (county, state) => {
 }
 displayCountyInfo = (county) => {
     countyInfoData.innerHTML = ""
-    Object.keys(county).forEach(i => {
+    // Object.keys(county).forEach(i => {
+    //     drawCountyEntryInfo(county[i]);
+    // });
+
+    for (i = county.length - 1; i >= 0; i--) {
         drawCountyEntryInfo(county[i]);
-    });
+    }
 }
 /* bookmark --------------------------------------------------------------------------*/
 drawCountyEntryInfo = (entry) => {
