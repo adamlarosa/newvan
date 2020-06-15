@@ -3,7 +3,7 @@ const title = document.getElementById("title");
 const deaths = document.getElementById("deaths");
 const covidURL = "https://api.covid19api.com"
 let covidPATH = "/dayone/country/"
-let covidSLUG = "china"
+let covidSLUG = "us"
 
 const main = document.getElementById("main-content");
 
@@ -23,14 +23,25 @@ countyInput.type = "submit"
 countyContainer.appendChild(countyForm)
 countyForm.appendChild(countySelect)
 countyForm.appendChild(countyInput)
-
-
-
-stateForm.addEventListener("submit", (e) => {
+  
+//-----------------------------------------------------------this is the event listener that moved
+countyForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const index = stateSelector.selectedIndex
-    showCountys(stateSelector.options[index].value)
+    const index = countySelect.selectedIndex
+    countyInfo(countySelect.options[index].value, state)
 })
+
+
+/*
+
+county form eventlistner NOT GLOBAL.  Bug when selecting
+a second time without refresh
+
+
+
+*/
+
+
 
 showCountys = (state) => {  
     countySelect.innerHTML = ""
@@ -39,10 +50,11 @@ showCountys = (state) => {
     })
     main.innerHTML = ""
     main.appendChild(countyContainer)
-    countyForm.addEventListener("submit", (e) => {
+    //bookmark --------event listener bug----------------------************************
+    stateForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const index = countySelect.selectedIndex
-        countyInfo(countySelect.options[index].value, state)
+        const index = stateSelector.selectedIndex
+        showCountys(stateSelector.options[index].value)
     })
 }
 countyInfo = (county, state) => {
@@ -51,7 +63,6 @@ countyInfo = (county, state) => {
     countyShow.innerHTML = ""
     countyShow.appendChild(countyInfo)
     countyInfo.innerText = `${county} County, ${state}`
-
     displayCountyInfo(states[state][county]);
 }
 displayCountyInfo = (county) => {
@@ -61,23 +72,11 @@ displayCountyInfo = (county) => {
 }
 /* bookmark --------------------------------------------------------------------------*/
 drawCountyEntryInfo = (entry) => {
-    /*
-        clear countyInfo?
-        create new div
-        add entry data to div 
-        append to countyInfo
-    */
     countyShow.appendChild(countyInfoData)
-    /* the preceding is the correct 
-        appendChild destination
-        but CSS of "footer" is incorrent
-        must be rows instead of columns?
-    */
     newEntry = document.createElement('div');
     newEntry.className = "entry"
-    newEntry.innerText = "testing"
+    newEntry.innerText = `${entry.Date} - ${entry.Confirmed} Confirmed cases.  ${entry.Deaths} Deaths.`
     countyInfoData.appendChild(newEntry)
-
 }
 
 let states = {};
@@ -141,5 +140,5 @@ sortFetch = (data) => {
         }
     }
 }
-title.innerText = "COVID-19"
+title.innerText = ""
 fetchData();
