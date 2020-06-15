@@ -16,7 +16,7 @@ const countyContainer = document.createElement("div")
 const countyForm = document.createElement("form")
 const countySelect = document.createElement("select")
 const countyInput = document.createElement("input")
-countyInfoData.className = "entry-container"
+countyInfoData.className = "entry-container" // THIS NEED TO BE ERASED 
 countyContainer.id = "county-container"
 countySelect.id = "county-select"
 countyInput.type = "submit"
@@ -24,21 +24,18 @@ countyContainer.appendChild(countyForm)
 countyForm.appendChild(countySelect)
 countyForm.appendChild(countyInput)
   
-//-----------------------------------------------------------this is the event listener that moved
-countyForm.addEventListener("submit", (e) => {
+
+
+stateForm.addEventListener("submit", (e) => {
     e.preventDefault();
-    const index = countySelect.selectedIndex
-    countyInfo(countySelect.options[index].value, state)
+    const index = stateSelector.selectedIndex
+    showCountys(stateSelector.options[index].value)
 })
 
 
 /*
-
 county form eventlistner NOT GLOBAL.  Bug when selecting
 a second time without refresh
-
-
-
 */
 
 
@@ -51,11 +48,12 @@ showCountys = (state) => {
     main.innerHTML = ""
     main.appendChild(countyContainer)
     //bookmark --------event listener bug----------------------************************
-    stateForm.addEventListener("submit", (e) => {
+    countyForm.addEventListener("submit", (e) => {
         e.preventDefault();
-        const index = stateSelector.selectedIndex
-        showCountys(stateSelector.options[index].value)
+        const index = countySelect.selectedIndex
+        countyInfo(countySelect.options[index].value, state)
     })
+
 }
 countyInfo = (county, state) => {
     //appended to countyShow (i.e. footer)
@@ -66,6 +64,7 @@ countyInfo = (county, state) => {
     displayCountyInfo(states[state][county]);
 }
 displayCountyInfo = (county) => {
+    countyInfoData.innerHTML = ""
     Object.keys(county).forEach(i => {
         drawCountyEntryInfo(county[i]);
     });
