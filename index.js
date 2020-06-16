@@ -16,7 +16,7 @@ const countyContainer = document.createElement("div")
 const countyForm = document.createElement("form")
 const countySelect = document.createElement("select")
 // const countyInput = document.createElement("input")
-countyInfoData.className = "entry-container" // THIS NEED TO BE ERASED 
+countyInfoData.className = "entry-container" 
 countyContainer.id = "county-container"
 countySelect.id = "county-select"
 //countyInput.type = "submit"
@@ -71,6 +71,7 @@ drawCountyEntryInfo = (entry) => {
     countyInfoData.appendChild(newEntry)
 }
 
+let data = {};
 let states = {};
 
 fetchData = () => {
@@ -78,6 +79,7 @@ console.log(new Date, "FETCH!")
     fetch(`${covidURL}${covidPATH}${covidSLUG}`)
         .then(resp => resp.json())
         .then(json => {
+            data = json;
 console.log(new Date, "download complete!  sorting results.")
             sortFetch(json);
 console.log(new Date, "fetch sorted!")
