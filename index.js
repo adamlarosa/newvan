@@ -85,13 +85,15 @@ drawCountyEntryInfo = (entry) => {
 let states = {};
 
 fetchData = () => {
-    console.log("FETCH!")
+console.log(new Date, "FETCH!")
     fetch(`${covidURL}${covidPATH}${covidSLUG}`)
         .then(resp => resp.json())
         .then(json => {
+console.log(new Date, "download complete!  sorting results.")
             sortFetch(json);
-                deaths.innerText = `${states[""][""][states[""][""].length - 1 ].Deaths} - Deaths`;
-                cases.innerText = `${states[""][""][states[""][""].length - 1 ].Confirmed} - Confirmed`;
+console.log(new Date, "fetch sorted!")
+            deaths.innerText = `${states[""][""][states[""][""].length - 1 ].Deaths} - Deaths`;
+            cases.innerText = `${states[""][""][states[""][""].length - 1 ].Confirmed} - Confirmed`;
             Object.keys(states).sort().map(name => {
                 stateSelector.appendChild(dropdownOption(name));
             })
