@@ -15,17 +15,17 @@ const countyInfoData = document.createElement('div')
 const countyContainer = document.createElement("div")
 const countyForm = document.createElement("form")
 const countySelect = document.createElement("select")
-const countyInput = document.createElement("input")
+// const countyInput = document.createElement("input")
 countyInfoData.className = "entry-container" // THIS NEED TO BE ERASED 
 countyContainer.id = "county-container"
 countySelect.id = "county-select"
-countyInput.type = "submit"
+//countyInput.type = "submit"
 countyContainer.appendChild(countyForm)
 countyForm.appendChild(countySelect)
-countyForm.appendChild(countyInput)
+//countyForm.appendChild(countyInput)
   
 
-stateForm.addEventListener("submit", (e) => {
+stateForm.addEventListener("change", (e) => {
     e.preventDefault();
     const index = stateSelector.selectedIndex
     showCountys(stateSelector.options[index].value)
@@ -38,7 +38,7 @@ showCountys = (state) => {
     })
     main.innerHTML = ""
     main.appendChild(countyContainer)
-    countyForm.addEventListener("submit", (e) => {
+    countyForm.addEventListener("change", (e) => {
         e.preventDefault();
         const index = countySelect.selectedIndex
         countyInfo(countySelect.options[index].value, state)
