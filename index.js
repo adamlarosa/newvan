@@ -25,20 +25,11 @@ countyForm.appendChild(countySelect)
 countyForm.appendChild(countyInput)
   
 
-
 stateForm.addEventListener("submit", (e) => {
     e.preventDefault();
     const index = stateSelector.selectedIndex
     showCountys(stateSelector.options[index].value)
 })
-
-
-/*
-county form eventlistner NOT GLOBAL.  Bug when selecting
-a second time without refresh
-*/
-
-
 
 showCountys = (state) => {  
     countySelect.innerHTML = ""
@@ -47,16 +38,13 @@ showCountys = (state) => {
     })
     main.innerHTML = ""
     main.appendChild(countyContainer)
-    //bookmark --------event listener bug----------------------************************
     countyForm.addEventListener("submit", (e) => {
         e.preventDefault();
         const index = countySelect.selectedIndex
         countyInfo(countySelect.options[index].value, state)
     })
-
 }
 countyInfo = (county, state) => {
-    //appended to countyShow (i.e. footer)
     let countyInfo = document.createElement("div")
     countyShow.innerHTML = ""
     countyShow.appendChild(countyInfo)
@@ -65,15 +53,16 @@ countyInfo = (county, state) => {
 }
 displayCountyInfo = (county) => {
     countyInfoData.innerHTML = ""
+    // starting from earliest date
     // Object.keys(county).forEach(i => {
     //     drawCountyEntryInfo(county[i]);
     // });
 
+    // starting from most recent
     for (i = county.length - 1; i >= 0; i--) {
         drawCountyEntryInfo(county[i]);
     }
 }
-/* bookmark --------------------------------------------------------------------------*/
 drawCountyEntryInfo = (entry) => {
     countyShow.appendChild(countyInfoData)
     newEntry = document.createElement('div');
